@@ -115,15 +115,15 @@ int main(void)
     }
     if (ledstate==0) {
       HAL_GPIO_WritePin(LEDR_GPIO_Port,LEDR_Pin,GPIO_PIN_RESET);
-      HAL_Delay(200);
+      HAL_Delay(100);
       HAL_GPIO_WritePin(LEDR_GPIO_Port,LEDR_Pin,GPIO_PIN_SET);
-      HAL_Delay(200);
+      HAL_Delay(100);
     }
     else {
       HAL_GPIO_WritePin(LED_GPIO_Port,LED_Pin,GPIO_PIN_RESET);
-      HAL_Delay(200);
+      HAL_Delay(100);
       HAL_GPIO_WritePin(LED_GPIO_Port,LED_Pin,GPIO_PIN_SET);
-      HAL_Delay(200);
+      HAL_Delay(100);
     }
     /* USER CODE END WHILE */
 
