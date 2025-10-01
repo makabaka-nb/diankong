@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "tim.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -89,41 +90,22 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
-
+  HAL_TIM_Base_Start(&htim1);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  HAL_GPIO_WritePin(LEDR_GPIO_Port, LEDR_Pin, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET);
+
+
   while (1)
   {
-    pushstate=HAL_GPIO_ReadPin(KEY_GPIO_Port, KEY_Pin);
-    if (pushstate_before!=pushstate) {
-      HAL_Delay(20);
-      if(pushstate==1) {
-        flag=1;
-      }
-      else {
-        if (flag==1) {
-          ledstate=!ledstate;
-          flag=0;
-        }
-      }
-      pushstate_before=pushstate;
-    }
-    if (ledstate==0) {
-      HAL_GPIO_WritePin(LEDR_GPIO_Port,LEDR_Pin,GPIO_PIN_RESET);
-      HAL_Delay(200);
-      HAL_GPIO_WritePin(LEDR_GPIO_Port,LEDR_Pin,GPIO_PIN_SET);
-      HAL_Delay(200);
+    if (__HAL_TIM_GET_COUNTER(&htim1)>5000) {
+      HAL_GPIO_WritePin(GPIOE,GPIO_PIN_11,GPIO_PIN_SET);
     }
     else {
-      HAL_GPIO_WritePin(LED_GPIO_Port,LED_Pin,GPIO_PIN_RESET);
-      HAL_Delay(200);
-      HAL_GPIO_WritePin(LED_GPIO_Port,LED_Pin,GPIO_PIN_SET);
-      HAL_Delay(200);
+      HAL_GPIO_WritePin(GPIOE,GPIO_PIN_11,GPIO_PIN_RESET);
     }
     /* USER CODE END WHILE */
 
@@ -132,7 +114,6 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-  }
   /* USER CODE END 3 */
 }
 
