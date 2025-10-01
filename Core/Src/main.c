@@ -46,7 +46,7 @@
 uint32_t  pushstate= 0;
 uint32_t flag=0;
 uint8_t ledstate = 0;
-uint8_t pushstate_before=0; // 123
+uint8_t pushstate_before=0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
