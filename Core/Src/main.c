@@ -23,7 +23,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include<math.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -92,7 +92,7 @@ int main(void)
   MX_GPIO_Init();
   MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
-  HAL_TIM_Base_Start(&htim1);
+  HAL_TIM_PWM_Start(&htim1,TIM_CHANNEL_2);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -101,12 +101,9 @@ int main(void)
 
   while (1)
   {
-    if (__HAL_TIM_GET_COUNTER(&htim1)>5000) {
-      HAL_GPIO_WritePin(GPIOE,GPIO_PIN_11,GPIO_PIN_SET);
-    }
-    else {
-      HAL_GPIO_WritePin(GPIOE,GPIO_PIN_11,GPIO_PIN_RESET);
-    }
+    uint32_t arr_value=__HAL_TIM_GET_AUTORELOAD(&htim1)+1;
+    uint32_t brightness=arr_value*sinf(4*HAL_GetTick()/1000.f)-1;
+    __HAL_TIM_SetCompare(&htim1,TIM_CHANNEL_2,brightness);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
