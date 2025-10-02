@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "usart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -89,42 +90,20 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_UART7_Init();
   /* USER CODE BEGIN 2 */
-
+  uint8_t tx_msg[]="RoboMaster";
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  HAL_GPIO_WritePin(LEDR_GPIO_Port, LEDR_Pin, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET);
+
   while (1)
   {
-    pushstate=HAL_GPIO_ReadPin(KEY_GPIO_Port, KEY_Pin);
-    if (pushstate_before!=pushstate) {
-      HAL_Delay(20);
-      if(pushstate==1) {
-        flag=1;
-      }
-      else {
-        if (flag==1) {
-          ledstate=!ledstate;
-          flag=0;
-        }
-      }
-      pushstate_before=pushstate;
-    }
-    if (ledstate==0) {
-      HAL_GPIO_WritePin(LEDR_GPIO_Port,LEDR_Pin,GPIO_PIN_RESET);
-      HAL_Delay(200);
-      HAL_GPIO_WritePin(LEDR_GPIO_Port,LEDR_Pin,GPIO_PIN_SET);
-      HAL_Delay(200);
-    }
-    else {
-      HAL_GPIO_WritePin(LED_GPIO_Port,LED_Pin,GPIO_PIN_RESET);
-      HAL_Delay(200);
-      HAL_GPIO_WritePin(LED_GPIO_Port,LED_Pin,GPIO_PIN_SET);
-      HAL_Delay(200);
-    }
+    HAL_UART_Transmit(&huart7,tx_msg,10,1000);
+    HAL_Delay(1000);
+
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -134,7 +113,7 @@ int main(void)
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
-}
+
 
 /**
   * @brief System Clock Configuration
