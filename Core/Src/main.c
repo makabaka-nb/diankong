@@ -45,6 +45,7 @@
 
 /* USER CODE BEGIN PV */
 uint8_t rx_msg[4];
+uint8_t tx_huanchong[4];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -89,7 +90,7 @@ int main(void)
   MX_GPIO_Init();
   MX_UART7_Init();
   /* USER CODE BEGIN 2 */
-  HAL_UART_Receive_IT(&huart7,rx_msg,1);
+  HAL_UART_Receive_IT(&huart7,rx_msg,3);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -104,9 +105,9 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-  }
+  
   /* USER CODE END 3 */
-
+}
 
 /**
   * @brief System Clock Configuration
